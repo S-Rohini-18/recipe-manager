@@ -1,0 +1,75 @@
+class Recipe:
+    def __init__(self, name, ingredients, instructions):
+        self.name = name
+        self.ingredients = ingredients
+        self.instructions = instructions
+
+
+class RecipeManager():
+    def __init__(self):
+        self.recipes = []
+
+    def add_recipe(self, recipe):
+        self.recipes.append(recipe)
+        print(f"\nRecipe '{recipe.name}' added successfully.")
+
+    def display_recipe(self, recipe_name):
+
+        for recipe in self.recipes:
+
+            if recipe.name.lower() == recipe_name.lower():
+                print(f"\nRecipe: {recipe.name}")
+                print("Ingredients:")
+
+                for ingredient in recipe.ingredients:
+                    print("- " + ingredient)
+
+                print("Instructions: ")
+                for step, instruction in enumerate(recipe.instructions, 1):
+                    print(f"{step}, {instruction}")
+                return
+
+        print(f"Recipe '{recipe_name}' not found.")
+
+
+# create a recipe manager
+manager = RecipeManager()
+
+# function to add a recipe
+def add_recipe():
+    name = input("Enter Recipe Name: ")
+
+    ingredients = input("Enter ingredients (comma-separated): ").split(",")
+    instructions = input("Enter instructions (one per line, 'end' to finish):\n")
+    instructions_list = []
+
+    while instructions.strip().lower() != "end":
+        instructions_list.append(instructions.strip())
+        instructions = input()
+
+    recipe = Recipe(name, ingredients, instructions_list)
+    manager.add_recipe(recipe)
+
+# function to display the recipe
+def display_recipe():
+    recipe_name = input("Enter recipe name to display: ")
+    manager.display_recipe(recipe_name)
+
+
+#main menu
+while True:
+    print("\nRecipe Manager")
+    print("1. Add Recipe")
+    print("2. Display Recipe")
+    print("3. Quit")
+    choice = input("Enter your choice: ")
+
+    if choice == "1":
+        add_recipe()
+    elif choice == "2":
+        display_recipe()
+    elif choice == "3":
+        print("Good bye!")
+        break
+    else:
+        print("Invalid choice. Please try again.")
